@@ -1,2 +1,2 @@
 # IMDB-Rating-Predictor
-AI Term Project - predictor using PCA and NN
+AI Term Project - predictor using Principal Component Anaylysis and Neural Networks
