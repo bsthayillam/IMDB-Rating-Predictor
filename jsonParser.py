@@ -32,8 +32,6 @@ class Parser():
 		maxFBLikes = 0
 		minDirFBLikes = sys.maxsize
 		maxDirFBLikes = 0
-		minIMDB = float('inf')
-		maxIMDB = 0
 
 		# Filter out unnecessary keys
 		count = 0
@@ -68,10 +66,6 @@ class Parser():
 						minDirFBLikes = dir_fb_likes
 					if (dir_fb_likes > maxDirFBLikes):
 						maxDirFBLikes = dir_fb_likes
-					if (imdb_score < minIMDB):
-						minIMDB = imdb_score
-					if (imdb_score > maxIMDB):
-						maxIMDB = imdb_score
 					count += 1
 
 		# Normalize Data
@@ -99,7 +93,7 @@ class Parser():
 
 		# Normalize output for just training data
 		for i in range(len(training)):
-			imdbNorm = (training[i]['imdb_score'] - minIMDB) / (maxIMDB - minIMDB)
+			imdbNorm = training[i]['imdb_score'] / 10.0
 			training[i]['imdb_score'] = imdbNorm
 
 		return (training, crossVal, testing)

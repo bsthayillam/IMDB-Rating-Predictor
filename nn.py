@@ -16,7 +16,7 @@ class NeuralNet:
                 y = self.num_outputs
             else:
                 y = self.hidden_param[i]
-            temp = (np.random.rand(x, y) * 0.5) - 0.25
+            temp = (np.random.rand(x, y) * 0.1) - 0.05
             self.weights.append(temp)
             x = y
 
@@ -54,7 +54,11 @@ class NeuralNet:
         error = 0.0
         for i in range(len(obs)):
             result = self.forprop(obs[i])[self.num_hidden + 1]
+            error += np.inner((result - rating[i]), (result - rating[i]))
             number = (scipy.stats.norm.fit(result)[0]) * 10.0
-            error += (rating[i] - number)*(rating[i] - number)
+            desired = (scipy.stats.norm.fit(rating[i])[0]) * 10.0
+            # print (number)
+            # print (desired)
+            # error += (desired - number)*(desired - number)
         return error/(float(len(obs)))
 
