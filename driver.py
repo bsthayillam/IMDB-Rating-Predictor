@@ -47,7 +47,7 @@ class TestNeuralNet():
 
         self.npcrossInp[j] = np.array(self.crossVal[j]['gross'] + self.crossVal[j]['budget'] + self.crossVal[j]['num_voted_users'] + self.crossVal[j]['num_facebook_like'] 
             + self.crossVal[j]['director_facebook_likes'])
-        self.npcrossOut[j] = np.array(self.train[j]['imdb_score'])
+        self.npcrossOut[j] = self.crossVal[j]['imdb_score']
 
     for k in range(len(self.test)):
         self.test[k]['gross'] = self.gauss.gaussian(self.test[k]['gross'], 0.1, 5)
@@ -58,7 +58,7 @@ class TestNeuralNet():
 
         self.nptestInp[k] = np.array(self.test[k]['gross'] + self.test[k]['budget'] + self.test[k]['num_voted_users'] + self.test[k]['num_facebook_like'] 
             + self.test[k]['director_facebook_likes'])
-        self.nptestOut[k] = np.array(self.test[k]['imdb_score'])
+        self.nptestOut[k] = self.test[k]['imdb_score']
 
     self.nptrainInp = np.array(self.nptrainInp)
     self.nptrainOut = np.array(self.nptrainOut)
@@ -66,6 +66,7 @@ class TestNeuralNet():
     self.npcrossOut = np.array(self.npcrossOut)
     self.nptestInp = np.array(self.nptestInp)
     self.nptestOut = np.array(self.nptestOut)
+    print(np.shape(self.npcrossOut))
 
   def test_weight_shapes(self):    
     structure = {'num_inputs': 25, 'num_outputs': 20, 'num_hidden': 1, 
@@ -73,7 +74,7 @@ class TestNeuralNet():
     candidate = NeuralNet(structure)
     candidate.train(self.nptrainInp, self.nptrainOut)
     temp = candidate.test(self.npcrossInp, self.npcrossOut)
-    print temp
+    print(temp)
   #   cand_weights = candidate.get_weights()
 
   #   self.assertEqual(cand_weights[0].shape, (3, 5))
