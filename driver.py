@@ -9,7 +9,7 @@ from gaussian import Gaussian
 import numpy as np
 from nn import NeuralNet
 
-class TestNeuralNet(unittest.TestCase):
+class TestNeuralNet():
 
   def setUp(self):
     self.p = Parser()
@@ -73,7 +73,7 @@ class TestNeuralNet(unittest.TestCase):
     candidate = NeuralNet(structure)
     candidate.train(self.nptrainInp, self.nptrainOut)
     temp = candidate.test(self.npcrossInp, self.npcrossOut)
-    print temp
+    # print temp
   #   cand_weights = candidate.get_weights()
 
   #   self.assertEqual(cand_weights[0].shape, (3, 5))
@@ -166,7 +166,14 @@ class TestNeuralNet(unittest.TestCase):
   #   print ("Extra Error: ", cand_error)
 
 if __name__ == '__main__':
-  testSuite = unittest.TestLoader().loadTestsFromTestCase(TestNeuralNet)
-  testRunner = unittest.TextTestRunner(descriptions=True, verbosity=2)
+  # testSuite = unittest.TestLoader().loadTestsFromTestCase(TestNeuralNet)
+  # testRunner = unittest.TextTestRunner(descriptions=True, verbosity=2)
 
-  testResult = testRunner.run(testSuite)
+  # testResult = testRunner.run(testSuite)
+  test = TestNeuralNet()
+  test.setUp()
+  print("Done setup!")
+  test.test_gaussian()
+  print("Done converting to gaussian!")
+  test.test_weight_shapes()
+  print("Finished testing!")
