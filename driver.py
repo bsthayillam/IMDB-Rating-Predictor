@@ -66,15 +66,15 @@ class TestNeuralNet():
     self.npcrossOut = np.array(self.npcrossOut)
     self.nptestInp = np.array(self.nptestInp)
     self.nptestOut = np.array(self.nptestOut)
-    print(np.shape(self.npcrossOut))
 
   def test_weight_shapes(self):    
     structure = {'num_inputs': 25, 'num_outputs': 20, 'num_hidden': 1, 
             'learning_rate': 0.8, 'hidden_param':[30]}
     candidate = NeuralNet(structure)
-    candidate.train(self.nptrainInp, self.nptrainOut)
-    temp = candidate.test(self.npcrossInp, self.npcrossOut)
-    print(temp)
+    for i in range(3):
+        candidate.train(self.nptrainInp, self.nptrainOut)
+        temp = candidate.test(self.npcrossInp, self.npcrossOut)
+        print(temp)
   #   cand_weights = candidate.get_weights()
 
   #   self.assertEqual(cand_weights[0].shape, (3, 5))

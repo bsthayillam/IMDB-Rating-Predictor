@@ -55,8 +55,6 @@ class NeuralNet:
         for i in range(len(obs)):
             result = self.forprop(obs[i])[self.num_hidden + 1]
             number = (scipy.stats.norm.fit(result)[0]) * 10.0
-            print(number)
-            print(rating[i])
             error += (rating[i] - number)*(rating[i] - number)
         return error/(float(len(obs)))
 
