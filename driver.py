@@ -60,12 +60,12 @@ class TestNeuralNet():
             + self.test[k]['director_facebook_likes'])
         self.nptestOut[k] = np.array(self.test[k]['imdb_score'])
 
-    self.nptrainInp = np.matrix(self.nptrainInp)
-    self.nptrainOut = np.matrix(self.nptrainOut)
-    self.npcrossInp = np.matrix(self.npcrossInp)
-    self.npcrossOut = np.matrix(self.npcrossOut)
-    self.nptestInp = np.matrix(self.nptestInp)
-    self.nptestOut = np.matrix(self.nptestOut)
+    self.nptrainInp = np.array(self.nptrainInp)
+    self.nptrainOut = np.array(self.nptrainOut)
+    self.npcrossInp = np.array(self.npcrossInp)
+    self.npcrossOut = np.array(self.npcrossOut)
+    self.nptestInp = np.array(self.nptestInp)
+    self.nptestOut = np.array(self.nptestOut)
 
   def test_weight_shapes(self):    
     structure = {'num_inputs': 25, 'num_outputs': 20, 'num_hidden': 1, 
@@ -73,7 +73,7 @@ class TestNeuralNet():
     candidate = NeuralNet(structure)
     candidate.train(self.nptrainInp, self.nptrainOut)
     temp = candidate.test(self.npcrossInp, self.npcrossOut)
-    # print temp
+    print temp
   #   cand_weights = candidate.get_weights()
 
   #   self.assertEqual(cand_weights[0].shape, (3, 5))

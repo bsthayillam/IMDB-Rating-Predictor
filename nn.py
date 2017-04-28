@@ -25,7 +25,8 @@ class NeuralNet:
 
     def forprop(self, inp):
         impulse = []
-        impulse.append(np.append(inp, 1.0))
+        newinp = np.append(inp, 1.0)
+        impulse.append(newinp)
         for i in range(self.num_hidden + 1):
             temp = self.sigmoid(np.dot(impulse[i], self.weights[i]))
             impulse.append(temp)
@@ -52,8 +53,10 @@ class NeuralNet:
     def test(self, obs, rating):
         error = 0.0
         for i in range(len(obs)):
-            result = self.forprop(obs[i])[self.num_hidden + 2]
+            result = self.forprop(obs[i])[self.num_hidden + 1]
             number = (scipy.stats.norm.fit(result)[0]) * 10.0
+            print number
+            print rating[i]
             error += (rating[i] - number)*(rating[i] - number)
         return error/(float(len(obs)))
 
