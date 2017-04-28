@@ -25,7 +25,7 @@ class NeuralNet:
 
     def forprop(self, inp):
         impulse = []
-        impulse.append(np.append(x, 1.0))
+        impulse.append(np.append(inp, 1.0))
         for i in range(self.num_hidden + 1):
             temp = self.sigmoid(np.dot(impulse[i], self.weights[i]))
             impulse.append(temp)

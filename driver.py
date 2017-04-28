@@ -7,6 +7,7 @@ import copy
 from jsonParser import Parser
 from gaussian import Gaussian
 import numpy as np
+from nn import NeuralNet
 
 class TestNeuralNet(unittest.TestCase):
 
@@ -66,11 +67,13 @@ class TestNeuralNet(unittest.TestCase):
     self.nptestInp = np.matrix(self.nptestInp)
     self.nptestOut = np.matrix(self.nptestOut)
 
-  # def test_weight_shapes(self):    
-  #   learning_rate = 0.8
-  #   structure = {'num_inputs': 2, 'num_outputs': 1, 'num_hidden': 5}
-  #   candidate = NeuralNet(structure, learning_rate)
-
+  def test_weight_shapes(self):    
+    structure = {'num_inputs': 25, 'num_outputs': 20, 'num_hidden': 1, 
+            'learning_rate': 0.8, 'hidden_param':[30]}
+    candidate = NeuralNet(structure)
+    candidate.train(self.nptrainInp, self.nptrainOut)
+    temp = candidate.test(self.npcrossInp, self.npcrossOut)
+    print temp
   #   cand_weights = candidate.get_weights()
 
   #   self.assertEqual(cand_weights[0].shape, (3, 5))
