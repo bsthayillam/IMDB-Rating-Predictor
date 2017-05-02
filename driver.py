@@ -71,10 +71,20 @@ class TestNeuralNet():
     structure = {'num_inputs': 100, 'num_outputs': 20, 'num_hidden': 1, 
             'learning_rate': 0.2, 'hidden_param':[40]}
     candidate = NeuralNet(structure)
-    for i in range(100):
+    
+    candidate.train(self.nptrainInp, self.nptrainOut)
+    temp = candidate.test(self.npcrossInp, self.npcrossOut)
+    current = temp
+    print("Error for Cross-Validation Data")
+    while(temp <= current):
+        current = temp
         candidate.train(self.nptrainInp, self.nptrainOut)
         temp = candidate.test(self.npcrossInp, self.npcrossOut)
         print(temp)
+
+    testError = candidate.test(self.nptestInp, self.nptestOut)
+    print("Error for Testing Data")
+    print(testError)
 
 if __name__ == '__main__':
   test = TestNeuralNet()
