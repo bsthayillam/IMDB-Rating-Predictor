@@ -68,12 +68,12 @@ class TestNeuralNet():
     self.nptestOut = np.array(self.nptestOut)
 
   def test_weight_shapes(self):    
-    structure = {'num_inputs': 100, 'num_outputs': 20, 'num_hidden': 2, 
-            'learning_rate': 0.2, 'hidden_param':[40, 20]}
+    structure = {'num_inputs': 100, 'num_outputs': 20, 'num_hidden': 1, 
+            'learning_rate': 0.2, 'hidden_param':[40]}
     candidate = NeuralNet(structure)
-    for i in range(40):
+    for i in range(100):
         candidate.train(self.nptrainInp, self.nptrainOut)
-        temp = candidate.test(self.nptrainInp, self.nptrainOut)
+        temp = candidate.test(self.npcrossInp, self.npcrossOut)
         print(temp)
 
 if __name__ == '__main__':

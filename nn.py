@@ -54,11 +54,18 @@ class NeuralNet:
         error = 0.0
         for i in range(len(obs)):
             result = self.forprop(obs[i])[self.num_hidden + 1]
-            error += np.inner((result - rating[i]), (result - rating[i]))
-            number = (scipy.stats.norm.fit(result)[0]) * 10.0
-            desired = (scipy.stats.norm.fit(rating[i])[0]) * 10.0
+            #error += np.inner((result - rating[i]), (result - rating[i]))
+            binSize = 1./(self.num_outputs)
+            currentValue = binSize/2.
+            bins = [0]*self.num_outputs
+            for i in range(0, self.num_outputs):
+                bins[i] = currentValue
+                currentValue = currentValue + binSize
+            bins = np.array(bins)
+            number = np.average(bins, weights=result) * 10.0
+            desired = rating[i]#(scipy.stats.norm.fit(rating[i])[0]) * 10.0
             # print (number)
             # print (desired)
-            # error += (desired - number)*(desired - number)
+            error += (desired - number)*(desired - number)
         return error/(float(len(obs)))
 
