@@ -68,8 +68,8 @@ class TestNeuralNet():
     self.nptestOut = np.array(self.nptestOut)
 
   def test_weight_shapes(self):    
-    structure = {'num_inputs': 100, 'num_outputs': 20, 'num_hidden': 1, 
-            'learning_rate': 0.2, 'hidden_param':[40]}
+    structure = {'num_inputs': 100, 'num_outputs': 20, 'num_hidden': 3, 
+            'learning_rate': 0.2, 'hidden_param':[10, 10, 10]}
     candidate = NeuralNet(structure)
     
     candidate.train(self.nptrainInp, self.nptrainOut)
@@ -96,3 +96,12 @@ if __name__ == '__main__':
   print("Done converting to gaussian!")
   test.test_weight_shapes()
   print("Finished testing!")
+  prompt = input("Want to Test on a movie? (Y/N)")
+  while (prompt != "N"):
+    gross = input("Input a gross amount: ")
+    budget = input("Input a budget amount: ")
+    num_voted_users = input("Number of voted users: ")
+    num_facebook_like = input("Number of Facebook likes for the movie: ")
+    director_facebook_likes = input("Number of Facebook likes for the director: ")
+    print("IMDb Rating: " + str(test.user_input(gross, budget, num_voted_users, num_facebook_like, director_facebook_likes)))
+    prompt = input("Want to Test on another movie? (Y/N)")
