@@ -21,6 +21,7 @@ class TestNeuralNet():
     self.npcrossOut = [0] * len(self.crossVal)
     self.nptestInp = [0] * len(self.test)
     self.nptestOut = [0] * len(self.test)
+    self.net
   #   random.seed(0)
   #   np.random.seed(0)
 
@@ -87,6 +88,24 @@ class TestNeuralNet():
     testError = candidate.test(self.nptestInp, self.nptestOut)
     print("Error for Testing Data")
     print(testError)
+    self.net = candidate
+
+
+  def user_input(self, gross, budget, votedUsers, facebookLike, dirFacebookLike):
+    
+    inp = []
+    inp = inp + self.gauss.gaussian(gross, 0.1, 20)
+    inp = inp + self.gauss.gaussian(budget, 0.1, 20)
+    inp = inp + self.gauss.gaussian(votedUsers, 0.1, 20)
+    inp = inp + self.gauss.gaussian(facebookLike, 0.1, 20)
+    inp = inp + self.gauss.gaussian(dirFacebookLike, 0.1, 20)
+    
+    rate = self.net(inp)
+    return rate
+
+
+
+
 
 if __name__ == '__main__':
   test = TestNeuralNet()
