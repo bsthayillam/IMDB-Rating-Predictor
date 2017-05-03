@@ -9,7 +9,9 @@ class NeuralNet:
         self.num_outputs = params["num_outputs"]
         self.num_hidden = params["num_hidden"]
         self.hidden_param = params["hidden_param"]
+        self.momentum = params["momentum"]
         self.weights = []
+        self.delta = None
         x = self.num_inputs
         for i in range(self.num_hidden + 1):
             if (i == self.num_hidden):
@@ -43,7 +45,11 @@ class NeuralNet:
             diff = np.dot(self.weights[i], deriv)
         delta_arr = delta_arr[::-1]
         for i in range(self.num_hidden + 1):
+            if self.delta != None:
+                delta_arr[i] = (delta_arr[i] + 
+                        self.momentum * self.delta[i])
             self.weights[i] = self.weights[i] - delta_arr[i]
+        self.delta = delta_arr
 
     def train(self, obs, rating):
         for i in range(len(obs)):
