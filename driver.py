@@ -21,7 +21,7 @@ class TestNeuralNet():
     self.npcrossOut = [0] * len(self.crossVal)
     self.nptestInp = [0] * len(self.test)
     self.nptestOut = [0] * len(self.test)
-    self.net
+    self.net = []
   #   random.seed(0)
   #   np.random.seed(0)
 
@@ -70,7 +70,7 @@ class TestNeuralNet():
 
   def test_weight_shapes(self):    
     structure = {'num_inputs': 100, 'num_outputs': 20, 'num_hidden': 3, 
-            'learning_rate': 0.2, 'hidden_param':[10, 10, 10]}
+            'learning_rate': 0.2, 'hidden_param':[10, 10, 10], 'momentum':0.05}
     candidate = NeuralNet(structure)
     
     candidate.train(self.nptrainInp, self.nptrainOut)
@@ -100,7 +100,7 @@ class TestNeuralNet():
     inp = inp + self.gauss.gaussian(facebookLike, 0.1, 20)
     inp = inp + self.gauss.gaussian(dirFacebookLike, 0.1, 20)
     
-    rate = self.net(inp)
+    rate = self.net.user(inp)
     return rate
 
 

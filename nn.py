@@ -75,3 +75,15 @@ class NeuralNet:
             error += (desired - number)*(desired - number)
         return error/(float(len(obs)))
 
+    def user(self, obs):
+        result = self.forprop(obs)[self.num_hidden + 1]
+        binSize = 1./(self.num_outputs)
+        currentValue = binSize/2.
+        bins = [0]*self.num_outputs
+        for i in range(0, self.num_outputs):
+            bins[i] = currentValue
+            currentValue = currentValue + binSize
+        bins = np.array(bins)
+        number = np.average(bins, weights=result) * 10.0
+        return number
+
