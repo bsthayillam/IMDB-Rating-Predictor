@@ -76,11 +76,13 @@ class TestNeuralNet():
     temp = candidate.test(self.npcrossInp, self.npcrossOut)
     current = temp
     print("Error for Cross-Validation Data")
-    while(temp <= current):
+    count = 0
+    while(temp <= current or count < 5):
         current = temp
         candidate.train(self.nptrainInp, self.nptrainOut)
         temp = candidate.test(self.npcrossInp, self.npcrossOut)
         print(temp)
+        count+=1
 
     testError = candidate.test(self.nptestInp, self.nptestOut)
     print("Error for Testing Data")
