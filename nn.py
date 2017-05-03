@@ -18,7 +18,7 @@ class NeuralNet:
                 y = self.num_outputs
             else:
                 y = self.hidden_param[i]
-            temp = (np.random.rand(x, y) * 0.1) - 0.05
+            temp = (np.random.rand(x, y) * 4) - 2.0
             self.weights.append(temp)
             x = y
 
