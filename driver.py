@@ -76,13 +76,13 @@ class TestNeuralNet():
     candidate.train(self.nptrainInp, self.nptrainOut)
     temp = candidate.test(self.npcrossInp, self.npcrossOut)
     current = temp
-    print("Error for Cross-Validation Data")
+    # print("Error for Cross-Validation Data")
     count = 0
     while(temp <= current or count < 5):
         current = temp
         candidate.train(self.nptrainInp, self.nptrainOut)
         temp = candidate.test(self.npcrossInp, self.npcrossOut)
-        print(temp)
+        # print(temp)
         count+=1
 
     testError = candidate.test(self.nptestInp, self.nptestOut)
@@ -92,13 +92,19 @@ class TestNeuralNet():
 
 
   def user_input(self, gross, budget, votedUsers, facebookLike, dirFacebookLike):
+
+    Normgross = 0 if gross < self.p.getMinGross() else 1 if gross > self.p.getMaxGross() else (gross - self.p.getMinGross()) / (self.p.getMaxGross() - self.p.getMinGross())
+    Normbudget = 0 if budget < self.p.getMinBudget() else 1 if budget > self.p.getMaxBudget() else (budget - self.p.getMinBudget()) / (self.p.getMaxBudget() - self.p.getMinBudget())
+    Normnum_voted = 0 if votedUsers < self.p.getMinNumVoted() else 1 if votedUsers > self.p.getMaxNumVoted() else (votedUsers - self.p.getMinNumVoted()) / (self.p.getMaxNumVoted() - self.p.getMinNumVoted())
+    Normfb_likes = 0 if facebookLike < self.p.getMinFBLikes() else 1 if facebookLike > self.p.getMaxFBLikes() else (facebookLike - self.p.getMinFBLikes()) / (self.p.getMaxFBLikes() - self.p.getMinFBLikes())
+    Normdir_fb_likes = 0 if dirFacebookLike < self.p.getMinDirFBLikes() else 1 if dirFacebookLike > self.p.getMaxDirFBLikes() else (dirFacebookLike - self.p.getMinDirFBLikes()) / (self.p.getMaxDirFBLikes() - self.p.getMinDirFBLikes())
     
     inp = []
-    inp = inp + self.gauss.gaussian(gross, 0.1, 20)
-    inp = inp + self.gauss.gaussian(budget, 0.1, 20)
-    inp = inp + self.gauss.gaussian(votedUsers, 0.1, 20)
-    inp = inp + self.gauss.gaussian(facebookLike, 0.1, 20)
-    inp = inp + self.gauss.gaussian(dirFacebookLike, 0.1, 20)
+    inp = inp + self.gauss.gaussian(Normgross, 0.1, 20)
+    inp = inp + self.gauss.gaussian(Normbudget, 0.1, 20)
+    inp = inp + self.gauss.gaussian(Normnum_voted, 0.1, 20)
+    inp = inp + self.gauss.gaussian(Normfb_likes, 0.1, 20)
+    inp = inp + self.gauss.gaussian(Normdir_fb_likes, 0.1, 20)
     
     rate = self.net.user(inp)
     return rate
@@ -115,12 +121,12 @@ if __name__ == '__main__':
   print("Done converting to gaussian!")
   test.test_weight_shapes()
   print("Finished testing!")
-  prompt = input("Want to Test on a movie? (Y/N)")
+  prompt = str(input("Want to Test on a movie? (Y/N)"))
   while (prompt != "N"):
-    gross = input("Input a gross amount: ")
-    budget = input("Input a budget amount: ")
-    num_voted_users = input("Number of voted users: ")
-    num_facebook_like = input("Number of Facebook likes for the movie: ")
-    director_facebook_likes = input("Number of Facebook likes for the director: ")
+    gross = int(input("Input a gross amount: "))
+    budget = int(input("Input a budget amount: "))
+    num_voted_users = int(input("Number of voted users: "))
+    num_facebook_like = int(input("Number of Facebook likes for the movie: "))
+    director_facebook_likes = int(input("Number of Facebook likes for the director: "))
     print("IMDb Rating: " + str(test.user_input(gross, budget, num_voted_users, num_facebook_like, director_facebook_likes)))
-    prompt = input("Want to Test on another movie? (Y/N)")
+    prompt = str(input("Want to Test on another movie? (Y/N)"))

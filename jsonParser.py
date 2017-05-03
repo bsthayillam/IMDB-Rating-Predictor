@@ -22,16 +22,16 @@ class Parser():
 		testing = []
 		initN = len(data)
 
-		minGross = sys.maxsize
-		maxGross = 0
-		minBudget = sys.maxsize
-		maxBudget = 0
-		minNumVoted = sys.maxsize
-		maxNumVoted = 0
-		minFBLikes = sys.maxsize
-		maxFBLikes = 0
-		minDirFBLikes = sys.maxsize
-		maxDirFBLikes = 0
+		self.minGross = sys.maxsize
+		self.maxGross = 0
+		self.minBudget = sys.maxsize
+		self.maxBudget = 0
+		self.minNumVoted = sys.maxsize
+		self.maxNumVoted = 0
+		self.minFBLikes = sys.maxsize
+		self.maxFBLikes = 0
+		self.minDirFBLikes = sys.maxsize
+		self.maxDirFBLikes = 0
 
 		# Filter out unnecessary keys
 		count = 0
@@ -41,40 +41,44 @@ class Parser():
 					gross = int(re.sub("\D", "", data[i]['gross'][0]))
 					budget = int(re.sub("\D", "", data[i]['budget'][0]))
 					num_voted = data[i]['num_voted_users']
-					fb_likes = int(re.sub("\D", "", data[i]['num_facebook_like'])) * 1000
+					fb_likes = int(re.sub("\D", "", data[i]['num_facebook_like']))
+					if ('K' in data[i]['num_facebook_like']):
+						fb_likes = fb_likes * 1000
 					imdb_score = float(data[i]['imdb_score'][0])
-					dir_fb_likes = int(re.sub("\D", "", data[i]['director_info']['director_facebook_likes'])) * 1000
+					dir_fb_likes = int(re.sub("\D", "", data[i]['director_info']['director_facebook_likes']))
+					if ('K' in data[i]['director_info']['director_facebook_likes']):
+						dir_fb_likes = dir_fb_likes * 1000
 					training = training + [{'gross' : gross, 'budget' : budget, 'num_voted_users' : num_voted, 'num_facebook_like' : fb_likes,
 											'director_facebook_likes' : dir_fb_likes, 'imdb_score' : imdb_score}]
-					if (gross < minGross):
-						minGross = gross
-					if (gross > maxGross):
-						maxGross = gross
-					if (budget < minBudget):
-						minBudget = budget
-					if (budget > maxBudget):
-						maxBudget = budget
-					if (num_voted < minNumVoted):
-						minNumVoted = num_voted
-					if (num_voted > maxNumVoted):
-						maxNumVoted = num_voted
-					if (fb_likes < minFBLikes):
-						minFBLikes = fb_likes
-					if (fb_likes > maxFBLikes):
-						maxFBLikes = fb_likes
-					if (dir_fb_likes < minDirFBLikes):
-						minDirFBLikes = dir_fb_likes
-					if (dir_fb_likes > maxDirFBLikes):
-						maxDirFBLikes = dir_fb_likes
+					if (gross < self.minGross):
+						self.minGross = gross
+					if (gross > self.maxGross):
+						self.maxGross = gross
+					if (budget < self.minBudget):
+						self.minBudget = budget
+					if (budget > self.maxBudget):
+						self.maxBudget = budget
+					if (num_voted < self.minNumVoted):
+						self.minNumVoted = num_voted
+					if (num_voted > self.maxNumVoted):
+						self.maxNumVoted = num_voted
+					if (fb_likes < self.minFBLikes):
+						self.minFBLikes = fb_likes
+					if (fb_likes > self.maxFBLikes):
+						self.maxFBLikes = fb_likes
+					if (dir_fb_likes < self.minDirFBLikes):
+						self.minDirFBLikes = dir_fb_likes
+					if (dir_fb_likes > self.maxDirFBLikes):
+						self.maxDirFBLikes = dir_fb_likes
 					count += 1
 
 		# Normalize Data
 		for i in range(len(training)):
-			gross = (training[i]['gross'] - minGross) / (maxGross - minGross)
-			budget = (training[i]['budget'] - minBudget) / (maxBudget - minBudget)
-			num_voted = (training[i]['num_voted_users'] - minNumVoted) / (maxNumVoted - minNumVoted)
-			fb_likes = (training[i]['num_facebook_like'] - minFBLikes) / (maxFBLikes - minFBLikes)
-			dir_fb_likes = (training[i]['director_facebook_likes'] - minDirFBLikes) / (maxDirFBLikes - minDirFBLikes)
+			gross = (training[i]['gross'] - self.minGross) / (self.maxGross - self.minGross)
+			budget = (training[i]['budget'] - self.minBudget) / (self.maxBudget - self.minBudget)
+			num_voted = (training[i]['num_voted_users'] - self.minNumVoted) / (self.maxNumVoted - self.minNumVoted)
+			fb_likes = (training[i]['num_facebook_like'] - self.minFBLikes) / (self.maxFBLikes - self.minFBLikes)
+			dir_fb_likes = (training[i]['director_facebook_likes'] - self.minDirFBLikes) / (self.maxDirFBLikes - self.minDirFBLikes)
 			training[i]['gross'] = gross
 			training[i]['budget'] = budget
 			training[i]['num_voted_users'] = num_voted
@@ -97,3 +101,33 @@ class Parser():
 			training[i]['imdb_score'] = imdbNorm
 
 		return (training, crossVal, testing)
+
+	def getMinGross(self):
+		return self.minGross
+
+	def getMaxGross(self):
+		return self.maxGross
+
+	def getMinBudget(self):
+		return self.minBudget
+
+	def getMaxBudget(self):
+		return self.maxBudget
+
+	def getMinNumVoted(self):
+		return self.minNumVoted
+
+	def getMaxNumVoted(self):
+		return self.maxNumVoted
+
+	def getMinFBLikes(self):
+		return self.minFBLikes
+
+	def getMaxFBLikes(self):
+		return self.maxFBLikes
+
+	def getMinDirFBLikes(self):
+		return self.minDirFBLikes
+
+	def getMaxDirFBLikes(self):
+		return self.maxDirFBLikes
